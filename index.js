@@ -21,11 +21,7 @@
       //npm install -g firebase-tools
       //npm install firebase
       
-//To download and install the CLI run the following command:
-
-      //curl -sL firebase.tools | bash
-
-
+      
 // Import the functions you need from the Firebase SDK
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onChildAdded } from "firebase/database";
