@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bessick Trading Unlimited Technical Support</title>
+    <title>BTU Tech Support Chat</title>
     <link rel="stylesheet" href="./index.css">
   </head>
   <body>
     <header>
-      <h2>Bessick Trading Unlimited Technical Support</h2>
+      <h2>BTU Tech Support Chat</h2>
     </header>
 
     <div id="chat">
@@ -22,64 +22,8 @@
       </form>
     </div>
     <!-- scripts -->
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/10.8.1/firebase-app-compat.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/10.8.1/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/10.8.1/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/10.8.1/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/10.8.1/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/10.8.1/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/10.8.1/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/10.8.1/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/10.8.1/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/10.8.1/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-    <script>
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyAXapb8t8GhozmtNrGg_a3BhqWgf8Xzfl4",
-        authDomain: "btu-tech.firebaseapp.com",
-        databaseURL: "https://btu-tech-default-rtdb.firebaseio.com",
-        projectId: "btu-tech",
-        storageBucket: "btu-tech.appspot.com",
-        messagingSenderId: "299200607978",
-        appId: "1:299200607978:web:72d2dde54b6f0b52720993",
-        measurementId: "G-SFN1852GNX"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-
-      // Get a reference to the database service
-      const db = firebase.database();
-
-      // Get a reference to the messages
-      const messagesRef = db.ref('messages');
-
-      // Listen for new messages and add them to the page
-      messagesRef.on('child_added', (snapshot) => {
-        const message = snapshot.val();
-        const messageElement = document.createElement('li');
-        messageElement.textContent = `${message.username}: ${message.message}`;
-        document.getElementById('messages').appendChild(messageElement);
-      });
-
-      // Listen for form submission
-      document.getElementById('message-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const messageInput = document.getElementById('message-input');
-        const messageText = messageInput.value;
-        // Save the new message to the database
-        messagesRef.push({
-          username: 'Anonymous',
-          message: messageText
-        });
-        // Clear the message input field
-        messageInput.value = '';
-      });
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+    <script src="index.js"></script>
   </body>
+</html>

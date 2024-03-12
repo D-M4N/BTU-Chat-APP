@@ -17,9 +17,10 @@
       //firebase deploy
 
 //To download and install the Firebase CLI run the following command:
-
-      //npm install -g firebase-tools
+      
       //npm install firebase
+      //npm install -g firebase-tools
+      
       
       
 // Import the functions you need from the Firebase SDK
@@ -39,47 +40,36 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 // Get a reference to the database service
-const db = getDatabase(app);
-
-const username = prompt("Please Tell Us Your Name");
-
-function sendMessage(e) {
-  e.preventDefault();
-
-  // get values to be submitted
-  const timestamp = Date.now();
-  const messageInput = document.getElementById("message-input");
-  const message = messageInput.value;
-
-  // clear the input box
-  messageInput.value = "";
-
-  // auto scroll to bottom
-  document
-    .getElementById("messages")
-    .scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
-
-  // create db collection and send in the data
-  const newMessageRef = ref(db, 'messages/' + timestamp);
-  newMessageRef.set({
-    username,
-    message,
-  });
-}
+const database = firebase.database();
 
 // Get a reference to the messages collection
-const messagesRef = ref(db, 'messages');
+const messagesRef = database.ref('messages');
 
-// Attach an asynchronous callback to read the data at the messagesRef reference
-onChildAdded(messagesRef, (snapshot) => {
-  const messages = snapshot.val();
-  const message = `<li class=${
-    username === messages.username ? "sent" : "receive"
-  }><span>${messages.username}: </span>${messages.message}</li>`;
-  // append the message on the page
-  document.getElementById("messages").innerHTML += message;
+// Listen for new messages and add them to the DOM
+messagesRef.limitToLast(25).on('child_added', (snapshot) => {
+  const message = snapshot.val();
+  displayMessage(message.name, message.text);
 });
 
+// Function to display a message
+function displayMessage(name, text) {
+  const messages = document.getElementById('messages');
+  const messageElement = document.createElement('li');
+  messageElement.innerText = `${name}: ${text}`;
+  messages.appendChild(messageElement);
+}
+
+// Function to send a message
+function sendMessage(e) {
+  e.preventDefault();
+  const name = 'Anonymous'; // You can replace this with the user's name or a username
+  const text = document.getElementById('message-input').value;
+  messagesRef.push({ name, text });
+  document.getElementById('message-input').value = '';
+}
+
+// Add an event listener for the send button
+document.getElementById('message-form').addEventListener('submit', sendMessage);
