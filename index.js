@@ -28,7 +28,7 @@
 // import { getDatabase, ref, onChildAdded } from "firebase/database";
 
 // Your web app's Firebase configuration
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyAXapb8t8GhozmtNrGg_a3BhqWgf8Xzfl4",
   authDomain: "btu-tech.firebaseapp.com",
   databaseURL: "https://btu-tech-default-rtdb.firebaseio.com",
@@ -147,7 +147,9 @@ function saveMediaToDatabase(downloadURL) {
 //LOGO upload
 
 const storage = firebase.storage();
+
 const logoRef = storage.ref('gs://btu-tech.appspot.com/Logo/BTU LOGO.png');
+
 logoRef.getDownloadURL().then(url => {
   // Create an image element
   const img = document.createElement('img');
@@ -159,3 +161,4 @@ logoRef.getDownloadURL().then(url => {
 }).catch(error => {
   console.log(error);
 });
+

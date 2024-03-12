@@ -102,12 +102,6 @@ button {
     text-align: left;
   }
 
-  body {
-    background-image: url('gs://btu-tech.appspot.com/Background/41919.jpg');
-    background-size: cover;
-    background-position: center;
-  }
-
   #logo {
     width: 100px;
     height: 100px;
@@ -115,4 +109,12 @@ button {
     text-align: center;
     line-height: 100px;
   }
+
+  body {
+    background-image: url('gs://btu-tech.appspot.com/Background/41919.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  
  
