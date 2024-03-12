@@ -177,6 +177,20 @@ function saveMediaToDatabase(downloadURL) {
   });
 }
 
+ // Get a reference to the storage service
+ const storage = firebase.storage();
+
+// Get a reference to the image
+const imageRef = storage.ref().child('Background/41919.jpg');
+
+// Download the image
+imageRef.getDownloadURL().then((downloadURL) => {
+  console.log('File available at', downloadURL);
+  document.body.style.backgroundImage = `url(${downloadURL})`;
+}).catch((error) => {
+  console.error('Error getting download URL', error);
+});
+
 
   </script>
 </body>
