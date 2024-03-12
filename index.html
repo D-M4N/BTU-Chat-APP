@@ -197,18 +197,6 @@ imageRef.getDownloadURL().then((downloadURL) => {
 });
 
 
-// Get a reference to the logo image
-const logoRef = storage.ref().child('gs://btu-tech.appspot.com/Logo/BTU LOGO.png');
-
-// Download the logo image
-logoRef.getDownloadURL().then((downloadURL) => {
-  console.log('File available at', downloadURL);
-  document.getElementById('logo-image').src = downloadURL;
-}).catch((error) => {
-  console.error('Error getting download URL', error);
-});
-
-
   </script>
 </body>
 </html>

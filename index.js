@@ -144,6 +144,11 @@ function saveMediaToDatabase(downloadURL) {
   });
 }
 
+logoRef.getDownloadURL().then((downloadURL) => {
+  console.log('File available at', downloadURL);
+}).catch((error) => {
+  console.error('Error getting download URL', error);
+});
 
-
+document.getElementById('logo-image').src = downloadURL;
 
