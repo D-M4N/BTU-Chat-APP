@@ -145,14 +145,5 @@ function saveMediaToDatabase(downloadURL) {
 }
 
 
-//LOGO
 
-const logoRef = storage.ref().child('gs://btu-tech.appspot.com/Logo/BTU LOGO.png');
-
-logoRef.getDownloadURL().then((downloadURL) => {
-  console.log('File available at', downloadURL);
-  document.getElementById('logo-image').src = downloadURL;
-}).catch((error) => {
-  console.error('Error getting download URL', error);
-});
 
