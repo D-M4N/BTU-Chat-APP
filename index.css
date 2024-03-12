@@ -109,11 +109,4 @@ button {
   }
 
  
-  .image-class {
-    image-rendering : url('gs://btu-tech.appspot.com/Images/BTU Logos.jpg');
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 50px;
-    height: auto;
-  }
+ 

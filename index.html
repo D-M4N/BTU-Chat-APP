@@ -190,27 +190,18 @@ function saveMediaToDatabase(downloadURL) {
  // Get a reference to the storage service
  const storage = firebase.storage();
 
-// Get a reference to the image file
-const imageRef = storage.ref('gs://btu-tech.appspot.com/Images/BTU Logos.jpg');
+// Get a reference to the image Background
+const imageRef = storage.ref().child('Background/41919.jpg');
 
-// Download the image URL
-imageRef.getDownloadURL().then(url => {
-  // Create an image element
-  const img = document.createElement('img');
-  img.src = url;
 
-  // Set the image style
-  img.style.position = 'absolute';
-  img.style.top = '10';
-  img.style.right = '100';
-  img.style.width = '50px';
-  img.style.height = 'auto';
-
-  // Add the image to the page
-  document.body.appendChild(img);
-}).catch(error => {
-  console.log(error);
+// Download the image
+imageRef.getDownloadURL().then((downloadURL) => {
+  console.log('gs://btu-tech.appspot.com/Images/BTU Logos.jpg', downloadURL);
+  document.body.style.backgroundImage = `url(${downloadURL})`;
+}).catch((error) => {
+  console.error('Error getting download URL', error);
 });
+
 
 
   </script>
