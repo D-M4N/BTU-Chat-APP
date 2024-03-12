@@ -202,7 +202,29 @@ imageRef.getDownloadURL().then((downloadURL) => {
   console.error('Error getting download URL', error);
 });
 
+// LOGO
 
+// Get a reference to the logo file
+const logoRef = storage.ref('gs://btu-tech.appspot.com/Logo/BTU LOGO.png');
+
+// Download the logo URL
+logoRef.getDownloadURL().then(url => {
+  // Create an image element
+  const img = document.createElement('img');
+  img.src = url;
+
+  // Set the image style
+  img.style.position = 'absolute';
+  img.style.top = '0';
+  img.style.right = '0';
+  img.style.width = '100px';
+  img.style.height = 'auto';
+
+  // Add the image to the page
+  document.body.appendChild(img);
+}).catch(error => {
+  console.log(error);
+});
 
   </script>
 </body>
