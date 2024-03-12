@@ -146,14 +146,16 @@ function saveMediaToDatabase(downloadURL) {
 
 //LOGO upload
 
-const imageRef = storage.ref().child('Images/BTU Logos.jpg');
+const storage = firebase.storage();
+const logoRef = storage.ref('gs://btu-tech.appspot.com/Logo/BTU LOGO.png');
+logoRef.getDownloadURL().then(url => {
+  // Create an image element
+  const img = document.createElement('img');
+  img.src = url;
 
-imageRef.getDownloadURL().then((downloadURL) => {
-  console.log('File available at', downloadURL);
-  const imgElement = document.createElement('img');
-  imgElement.src = downloadURL;
-  imgElement.className = 'image-class';
-  document.body.appendChild(imgElement);
-}).catch((error) => {
-  console.error('Error getting download URL', error);
+  // Add the image to the page
+  const logo = document.getElementById('logo');
+  logo.appendChild(img);
+}).catch(error => {
+  console.log(error);
 });
