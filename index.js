@@ -144,14 +144,12 @@ function saveMediaToDatabase(downloadURL) {
   });
 }
 
-const imageRef = storage.ref().child('gs://btu-tech.appspot.com/Logo/BTU Logos .jpg');
+const imageRef = storage.ref().child('gs://btu-tech.appspot.com/Images/BTU Logos.jpg');
+
 
 imageRef.getDownloadURL().then((downloadURL) => {
   console.log('File available at', downloadURL);
-  const imageTopRight = document.createElement('img');
-  imageTopRight.src = downloadURL;
-  imageTopRight.className = 'image-top-right';
-  document.body.appendChild(imageTopRight);
+  document.querySelector('.image-top-right').src = downloadURL;
 }).catch((error) => {
   console.error('Error getting download URL', error);
 });
