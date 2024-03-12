@@ -24,11 +24,11 @@
       
       
 // Import the functions you need from the Firebase SDK
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onChildAdded } from "firebase/database";
+// import { initializeApp } from "firebase/app";
+// import { getDatabase, ref, onChildAdded } from "firebase/database";
 
 // Your web app's Firebase configuration
-const firebaseConfig = {
+var firebaseConfig = {
   apiKey: "AIzaSyAXapb8t8GhozmtNrGg_a3BhqWgf8Xzfl4",
   authDomain: "btu-tech.firebaseapp.com",
   databaseURL: "https://btu-tech-default-rtdb.firebaseio.com",
@@ -39,37 +39,42 @@ const firebaseConfig = {
   measurementId: "G-SFN1852GNX"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Get a reference to the database service
-const database = firebase.database();
+const db = firebase.database();
 
-// Get a reference to the messages collection
-const messagesRef = database.ref('messages');
+const username = prompt("Please Tell Us Your Name");
 
-// Listen for new messages and add them to the DOM
-messagesRef.limitToLast(25).on('child_added', (snapshot) => {
-  const message = snapshot.val();
-  displayMessage(message.name, message.text);
-});
-
-// Function to display a message
-function displayMessage(name, text) {
-  const messages = document.getElementById('messages');
-  const messageElement = document.createElement('li');
-  messageElement.innerText = `${name}: ${text}`;
-  messages.appendChild(messageElement);
-}
-
-// Function to send a message
 function sendMessage(e) {
   e.preventDefault();
-  const name = 'Anonymous'; // You can replace this with the user's name or a username
-  const text = document.getElementById('message-input').value;
-  messagesRef.push({ name, text });
-  document.getElementById('message-input').value = '';
+
+  // get values to be submitted
+  const timestamp = Date.now();
+  const messageInput = document.getElementById("message-input");
+  const message = messageInput.value;
+
+  // clear the input box
+  messageInput.value = "";
+
+  //auto scroll to bottom
+  document
+    .getElementById("messages")
+    .scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+
+  // create db collection and send in the data
+  db.ref("messages/" + timestamp).set({
+    username,
+    message,
+  });
 }
 
-// Add an event listener for the send button
-document.getElementById('message-form').addEventListener('submit', sendMessage);
+const fetchChat = db.ref("messages/");
+
+fetchChat.on("child_added", function (snapshot) {
+  const messages = snapshot.val();
+  const message = `<li class=${
+    username === messages.username ? "sent" : "receive"
+  }><span>${messages.username}: </span>${messages.message}</li>`;
+  // append the message on the page
+  document.getElementById("messages").innerHTML += message;
+});
