@@ -108,7 +108,8 @@ button {
     background-position: center;
   }
 
-  .image-top-right {
+ 
+  .image-class {
     position: absolute;
     top: 10px;
     right: 10px;

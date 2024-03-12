@@ -61,6 +61,7 @@
     <button type="button" id="media-upload-btn">Upload Image</button>
   </form>
   <img class="image-top-right" src="gs://btu-tech.appspot.com/Images/BTU Logos.jpg">
+  <img class="image-class" src="">
   <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
@@ -188,8 +189,9 @@ function saveMediaToDatabase(downloadURL) {
  // Get a reference to the storage service
  const storage = firebase.storage();
 
-// Get a reference to the image
+// Get a reference to the image Background
 const imageRef = storage.ref().child('Background/41919.jpg');
+
 
 // Download the image
 imageRef.getDownloadURL().then((downloadURL) => {
