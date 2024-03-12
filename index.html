@@ -1,29 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BTU Tech Support Chat</title>
-    <link rel="stylesheet" href="./index.css">
-  </head>
-  <body>
-    <header>
-      <h2>BTU Tech Support Chat</h2>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat App</title>
+  <style>
+    .messages {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
 
-    <div id="chat">
-      <!-- messages will display here -->
-      <ul id="messages"></ul>
+    .receive,
+    .sent {
+      max-width: 50%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
 
-      <!-- form to send message -->
-      <form id="message-form">
-        <input id="message-input" type="text" />
-        <button id="message-btn" type="submit">Send</button>
-      </form>
-    </div>
-    <!-- scripts -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
-    <script src="index.js"></script>
-  </body>
+    .receive {
+      background-color: #f2f2f2;
+      align-self: flex-start;
+    }
+
+    .sent {
+      background-color: #4caf50;
+      color: white;
+      align-self: flex-end;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chat App</h1>
+  <ul id="messages" class="messages"></ul>
+  <form id="message-form">
+    <input type="text" id="message-input" placeholder="Type your message" required />
+    <button type="submit">Send</button>
+  </form>
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAXapb8t8GhozmtNrGg_a3BhqWgf8Xzfl4",
+      authDomain: "btu-tech.firebaseapp.com",
+      databaseURL: "https://btu-tech-default-rtdb.firebaseio.com",
+      projectId: "btu-tech",
+      storageBucket: "btu-tech.appspot.com",
+      messagingSenderId: "299200607978",
+      appId: "1:299200607978:web:72d2dde54b6f0b52720993",
+      measurementId: "G-SFN1852GNX"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    const db = firebase.database();
+
+    const username = prompt("Please Tell Us Your Name");
+
+    function sendMessage(e) {
+      e.preventDefault();
+
+      // get values to be submitted
+      const timestamp = Date.now();
+      const messageInput = document.getElementById("message-input");
+      const message = messageInput.value;
+
+      // clear the input box
+      messageInput.value = "";
+
+      // auto scroll to bottom
+      document
+        .getElementById("messages")
+        .scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+
+      // create db collection and send in the data
+      db.ref("messages/" + timestamp).set({
+        username,
+        message,
+      });
+    }
+
+    const fetchChat = db.ref("messages/");
+
+    fetchChat.on("child_added", function (snapshot) {
+      const messages = snapshot.val();
+      const message = `<li class=${
+        username === messages.username ? "sent" : "receive"
+      }><span>${messages.username}: </span>${messages.message}</li>`;
+      // append the message on the page
+      document.getElementById("messages").innerHTML += message;
+    });
+
+    document.getElementById("message-form").addEventListener("submit", sendMessage);
+  </script>
+</body>
 </html>
