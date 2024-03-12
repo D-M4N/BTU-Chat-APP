@@ -28,7 +28,7 @@
     }
 
     .sent {
-      background-color: #4c96af;
+      background-color: #70a4b5;
       color: white;
       align-self: flex-end;
     }
@@ -38,11 +38,17 @@
   <h1>BTU Techsupport Chat</h1>
   <ul id="messages" class="messages"></ul>
   <form id="message-form">
+    <!-- Send Text button -->
     <input type="text" id="message-input" placeholder="Type your message" required />
     <button type="submit">Send</button>
+    <!-- Send Image Button -->
+    <input type="file" id="image-input" accept="image/*" />
+    <button type="button" id="media-upload-btn">Upload Image</button>
   </form>
+    
   <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-storage.js"></script>
   <script>
     // Your web app's Firebase configuration
     var firebaseConfig = {
