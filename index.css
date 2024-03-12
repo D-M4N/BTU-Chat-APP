@@ -101,3 +101,9 @@ button {
   .receive {
     text-align: left;
   }
+
+  body {
+    background-image: url('gs://btu-tech.appspot.com/Background/41919.jpg');
+    background-size: cover;
+    background-position: center;
+  }
