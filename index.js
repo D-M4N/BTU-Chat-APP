@@ -43,6 +43,9 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.database();
 
+const form = document.getElementById('message-form');
+
+
 const username = prompt("Please Tell Us Your Name");
 
 function sendMessage(e) {
@@ -161,4 +164,5 @@ logoRef.getDownloadURL().then(url => {
 }).catch(error => {
   console.log(error);
 });
+
 

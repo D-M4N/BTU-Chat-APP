@@ -52,27 +52,27 @@
     text-align: right;
     background-color: #a79cb3;
     margin-left: 50%;
-}
+      }
 
-.media span {
-    margin-left: 5px;
-    color: #6929ca;
-}
+      .media span {
+          margin-left: 5px;
+          color: #6929ca;
+      }
 
-.media-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .media-list li {
-    margin-bottom: 10px;
-  }
-  
-  .media-list img,
-  .media-list video {
-    max-width: 100%;
-    height: auto;
-  }
+      .media-list {
+          list-style-type: none;
+          padding: 0;
+        }
+        
+        .media-list li {
+          margin-bottom: 10px;
+        }
+        
+        .media-list img,
+        .media-list video {
+          max-width: 100%;
+          height: auto;
+        }
 
   </style>
 </head>
@@ -80,7 +80,7 @@
   <h1>BTU Techsupport Chat</h1>
   <ul id="messages" class="messages"></ul>
   <form id="message-form">
-    <!-- Send Text button -->
+        <!-- Send Text button -->
     <input type="text" id="message-input" placeholder="Type your message" required />
     <button type="submit">Send</button>
     <!-- Send Image Button -->
@@ -151,8 +151,8 @@
 
 //Button media upload button
 
-         const mediaInput = document.getElementById("media-input");
-      const mediaUploadBtn = document.getElementById("media-upload-btn");
+                 const mediaInput = document.getElementById("media-input");
+              const mediaUploadBtn = document.getElementById("media-upload-btn");
 
       mediaUploadBtn.addEventListener("click", () => {
         if (mediaInput.files.length > 0) {
@@ -221,16 +221,27 @@ function saveMediaToDatabase(downloadURL) {
  const storage = firebase.storage();
 
 // Get a reference to the image Background
-const imageRef = storage.ref().child('Background/41919.jpg');
+//const imageRef = storage.ref().child('Background/41919.jpg');
+//const imageRef = storage.refFromURL('gs://btu-tech.appspot.com/Background/41919.jpg');
 
-
-// Download the image background
+const imageRef = storage.ref('Background/41919.jpg');
 imageRef.getDownloadURL().then((downloadURL) => {
   console.log('gs://btu-tech.appspot.com/Background/41919.jpg', downloadURL);
   document.body.style.backgroundImage = `url(${downloadURL})`;
 }).catch((error) => {
   console.error('Error getting download URL', error);
 });
+
+
+// // Download the image background
+// imageRef.getDownloadURL().then((downloadURL) => {
+//   console.log('gs://btu-tech.appspot.com/Background/41919.jpg', downloadURL);
+//   document.body.style.backgroundImage = `url(${downloadURL})`;
+// }).catch((error) => {
+//   console.error('Error getting download URL', error);
+// });
+
+
 
 // LOGO
 
