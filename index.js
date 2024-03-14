@@ -82,44 +82,68 @@ fetchChat.on("child_added", function (snapshot) {
   document.getElementById("messages").innerHTML += message;
 });
 
+
 //Button media upload
-const mediaInput = document.getElementById("media-input");
-const mediaUploadBtn = document.getElementById("media-upload-btn");
 
-mediaUploadBtn.addEventListener("click", () => {
-  if (mediaInput.files.length > 0) {
-    uploadMedia(mediaInput.files[0]);
-  }
-});
+// const storageRef = storage.ref('Chat images/');
+// const mediaInput = document.getElementById("media-input");
 
-const fetchMedia = db.ref("media/");
+// const mediaUploadBtn = document.getElementById("media-upload-btn");
+// mediaUploadBtn.addEventListener("click", () => {
+//   if (mediaInput.files.length > 0) {
+//     uploadMedia(mediaInput.files[0]);
+//   }
+// });
 
-fetchMedia.on("child_added", function (snapshot) {
-  const mediaData = snapshot.val();
-  let mediaElement = "";
+// function uploadMedia(file) {
+//   // Upload the file to Firebase Storage
+// }
 
-  if (mediaData.media.endsWith(".jpg") || mediaData.media.endsWith(".jpeg") || mediaData.media.endsWith(".png")) {
+//  function uploadMedia(file) {
+//    const uploadTask = storageRef.child(`Chat images/${file.name}`).put(file);
+//  }
+
+
+
+ //Button media upload
+ const storageRef = storage.ref('Chat images/');
+ const mediaInput = document.getElementById("media-input");
+ const mediaUploadBtn = document.getElementById("media-upload-btn");
+
+ mediaUploadBtn.addEventListener("click", () => {
+   if (mediaInput.files.length > 0) {
+     uploadMedia(mediaInput.files[0]);
+   }
+ });
+
+ const fetchMedia = db.ref("Chat images/");
+
+ fetchMedia.on("child_added", function (snapshot) {
+   const mediaData = snapshot.val();
+   let mediaElement = "";
+
+   if (mediaData.media.endsWith(".jpg") || mediaData.media.endsWith(".jpeg") || mediaData.media.endsWith(".png")) {
     mediaElement = `<li class=${
-      username === mediaData.username ? "sent" : "receive"
-    }><img src="${mediaData.media}" alt="${mediaData.username}'s image" /></li>`;
-  } else if (mediaData.media.endsWith(".mp4") || mediaData.media.endsWith(".mov") || mediaData.media.endsWith(".avi")) {
+       username === mediaData.username ? "sent" : "receive"
+     }><img src="${mediaData.media}" alt="${mediaData.username}'s image" /></li>`;
+   } else if (mediaData.media.endsWith(".mp4") || mediaData.media.endsWith(".mov") || mediaData.media.endsWith(".avi")) {
+     mediaElement = `<li class=${
+       username === mediaData.username ? "sent" : "receive"
+     }><video controls><source src="${mediaData.media}" type="video/${mediaData.media.split('.').pop()}"></video></li>`;
+   } else if (mediaData.media.endsWith(".mp3") || mediaData.media.endsWith(".wav")) {
     mediaElement = `<li class=${
-      username === mediaData.username ? "sent" : "receive"
-    }><video controls><source src="${mediaData.media}" type="video/${mediaData.media.split('.').pop()}"></video></li>`;
-  } else if (mediaData.media.endsWith(".mp3") || mediaData.media.endsWith(".wav")) {
-    mediaElement = `<li class=${
-      username === mediaData.username ? "sent" : "receive"
-    }><audio controls><source src="${mediaData.media}" type="audio/${mediaData.media.split('.').pop()}"></audio></li>`;
+       username === mediaData.username ? "sent" : "receive"
+     }><audio controls><source src="${mediaData.media}" type="audio/${mediaData.media.split('.').pop()}"></audio></li>`;
   }
 
   // Append the media on the page
-  document.getElementById("messages").innerHTML += mediaElement;
-});
+   document.getElementById("messages").innerHTML += mediaElement;
+ });
 
 // media upload
 function uploadMedia(file) {
   const storageRef = firebase.storage().ref();
-  const uploadTask = storageRef.child(`media/${file.name}`).put(file);
+  const uploadTask = storageRef.child(`Chat images/${file.name}`).put(file);
 
   uploadTask.on(
     "state_changed",
@@ -141,7 +165,7 @@ function uploadMedia(file) {
 
 function saveMediaToDatabase(downloadURL) {
   const timestamp = Date.now();
-  db.ref("media/" + timestamp).set({
+  db.ref("Chat images/" + timestamp).set({
     username,
     media: downloadURL,
   });
