@@ -85,7 +85,7 @@ fetchChat.on("child_added", function (snapshot) {
 
 //Button media upload
 
-// const storageRef = storage.ref('Chat images/');
+// const storageRef = storage.ref('Chat_images/');
 // const mediaInput = document.getElementById("media-input");
 
 // const mediaUploadBtn = document.getElementById("media-upload-btn");
@@ -100,40 +100,41 @@ fetchChat.on("child_added", function (snapshot) {
 // }
 
 //  function uploadMedia(file) {
-//    const uploadTask = storageRef.child(`Chat images/${file.name}`).put(file);
+//    const uploadTask = storageRef.child(`Chat_images/${file.name}`).put(file);
 //  }
 
 
 
  //Button media upload
- const storageRef = storage.ref('Chat images/');
- const mediaInput = document.getElementById("media-input");
- const mediaUploadBtn = document.getElementById("media-upload-btn");
+ 
+const storageRef = firebase.storage().ref('Chat_images/');
+const mediaInput = document.getElementById("media-input");
+const mediaUploadBtn = document.getElementById("media-upload-btn");
 
- mediaUploadBtn.addEventListener("click", () => {
-   if (mediaInput.files.length > 0) {
-     uploadMedia(mediaInput.files[0]);
-   }
- });
+mediaUploadBtn.addEventListener("click", () => {
+  if (mediaInput.files.length > 0) {
+    uploadMedia(mediaInput.files[0]);
+  }
+});
 
- const fetchMedia = db.ref("Chat images/");
+const fetchMedia = db.ref("Chat_images/");
 
- fetchMedia.on("child_added", function (snapshot) {
-   const mediaData = snapshot.val();
-   let mediaElement = "";
+fetchMedia.on("child_added", function (snapshot) {
+  const mediaData = snapshot.val();
+  let mediaElement = "";
 
-   if (mediaData.media.endsWith(".jpg") || mediaData.media.endsWith(".jpeg") || mediaData.media.endsWith(".png")) {
+  if (mediaData.media.endsWith(".jpg") || mediaData.media.endsWith(".jpeg") || mediaData.media.endsWith(".png")) {
     mediaElement = `<li class=${
-       username === mediaData.username ? "sent" : "receive"
-     }><img src="${mediaData.media}" alt="${mediaData.username}'s image" /></li>`;
-   } else if (mediaData.media.endsWith(".mp4") || mediaData.media.endsWith(".mov") || mediaData.media.endsWith(".avi")) {
-     mediaElement = `<li class=${
-       username === mediaData.username ? "sent" : "receive"
-     }><video controls><source src="${mediaData.media}" type="video/${mediaData.media.split('.').pop()}"></video></li>`;
-   } else if (mediaData.media.endsWith(".mp3") || mediaData.media.endsWith(".wav")) {
+      username === mediaData.username ? "sent" : "receive"
+    }><img src="${mediaData.media}" alt="${mediaData.username}'s image" /></li>`;
+  } else if (mediaData.media.endsWith(".mp4") || mediaData.media.endsWith(".mov") || mediaData.media.endsWith(".avi")) {
     mediaElement = `<li class=${
-       username === mediaData.username ? "sent" : "receive"
-     }><audio controls><source src="${mediaData.media}" type="audio/${mediaData.media.split('.').pop()}"></audio></li>`;
+      username === mediaData.username ? "sent" : "receive"
+    }><video controls><source src="${mediaData.media}" type="video/${mediaData.media.split('.').pop()}"></video></li>`;
+  } else if (mediaData.media.endsWith(".mp3") || mediaData.media.endsWith(".wav")) {
+    mediaElement = `<li class=${
+      username === mediaData.username ? "sent" : "receive"
+    }><audio controls><source src="${mediaData.media}" type="audio/${mediaData.media.split('.').pop()}"></audio></li>`;
   }
 
   // Append the media on the page
@@ -141,9 +142,10 @@ fetchChat.on("child_added", function (snapshot) {
  });
 
 // media upload
+
 function uploadMedia(file) {
-  const storageRef = firebase.storage().ref();
-  const uploadTask = storageRef.child(`Chat images/${file.name}`).put(file);
+  const storageRef = firebase.storage().ref('Chat_images/');
+  const uploadTask = storageRef.child(`${Date.now()}-${file.name}`).put(file);
 
   uploadTask.on(
     "state_changed",
@@ -165,7 +167,7 @@ function uploadMedia(file) {
 
 function saveMediaToDatabase(downloadURL) {
   const timestamp = Date.now();
-  db.ref("Chat images/" + timestamp).set({
+  db.ref("Chat_images/" + timestamp).set({
     username,
     media: downloadURL,
   });
